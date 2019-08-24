@@ -1,0 +1,12 @@
+/node_modules/
+/dist/
+/yarn-error.log
+/yarn.lock
+/package-lock.json
+/env
+/.babelrc
+/.editorconfig
+/.eslintrc
+/.jshintrc
+/uploads/
+/.history
