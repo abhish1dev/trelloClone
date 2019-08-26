@@ -6,6 +6,7 @@ import Board from '../server/Models/boards';
 import UserBoard from '../server/Models/user_board_association';
 import BoardList from '../server/Models/board_lists';
 import ListTicket from '../server/Models/list_ticket';
+import TicketComment from '../server/Models/ticket_comments';
 
 const Op = Sequelize.Op;
 const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DATABASE_PASSWORD, {
@@ -34,7 +35,8 @@ const models = {
   Boards: Board(sequelize, Sequelize),
   UserBoards: UserBoard(sequelize, Sequelize),
   BoardList: BoardList(sequelize, Sequelize),
-  ListTickets: ListTicket(sequelize, Sequelize)
+  ListTickets: ListTicket(sequelize, Sequelize),
+  TicketComments: TicketComment(sequelize, Sequelize)
 };
 
 Object.values(models)

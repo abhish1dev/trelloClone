@@ -12,4 +12,8 @@ router.route('/')
   /* PUT /v1.0/tickets/ - User updated a ticket order */
   .put(Auth, Tickets.changeTicketOrder);
 
+  router.route('/comment')
+    /* POST /v1.0/tickets/comment - Post a comment on tickets */
+    .post(Auth, Tickets.ticketComments);
+
 module.exports = router;

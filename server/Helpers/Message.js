@@ -14,5 +14,8 @@ module.exports = {
   userInvited: 'User invited successfully. Verification link send to user account',
   invitedRegistration: 'You have registered successfully',
   listCreated: 'List created successfully',
-  listUpdated: 'List updated successfully'
+  listUpdated: 'List updated successfully',
+  ticketCreated: 'Ticket created successfully',
+  ticketUpdated: 'Ticket updated successfully',
+  ticketComment: 'Comment added successfully'
 };

@@ -19,10 +19,9 @@ class Tickets {
       const post = req.body;
       if (post.ticket_id === undefined) {
         const createdListTicket = await db.ListTickets.create(post);
-        console.log(createdListTicket.dataValues);
         db.ListTickets.max('ticket_order', {
           where: {
-            ticket_id: createdListTicket.dataValues.ticket_id
+            list_id: post.list_id
           },
           raw: true,
         }).then((ticketCount) => {
@@ -86,6 +85,23 @@ class Tickets {
     }
   }
 
+  /**
+   * Comment on tickets
+   * @params req.body
+   * @return Promise
+   */
+
+
+  static async ticketComments(req, res, next) {
+    try {
+      const post = req.body;
+      post.commented_by = req.user.query.user_id;
+      await db.TicketComments.create(post);
+      res.status(201).json(new ResponseObject(201, Message.ticketComment));
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default Tickets;
