@@ -9,6 +9,8 @@ module.exports = {
   accountDeactivated: 'Your account is deactivated please contact admin',
   emailNotVerified: 'Please verify your email before login',
   boardCreated: 'Board created successfully',
-  boardUpdated: 'Board updated successfully'
+  boardUpdated: 'Board updated successfully',
+  userAlreadyInvited: 'User already invited for the board',
+  userInvited: 'User invited successfully. Verification link send to user account',
+  invitedRegistration: 'You have registered successfully.'
 };
-

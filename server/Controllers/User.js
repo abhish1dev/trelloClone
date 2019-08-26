@@ -86,7 +86,7 @@ class Users {
       try {
         const userCreated = await db.Users.create(post);
         email.registration(userCreated);
-        console.log(cb.fileDetail);
+        debug(cb.fileDetail);
         if (cb.fileDetail.length) {
           const userId = userCreated.user_id;
           const imgpath = `profile/${userId}/`;

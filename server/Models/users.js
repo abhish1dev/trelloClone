@@ -17,19 +17,19 @@ export default class User {
       },
       password: {
         type: DataTypes.STRING(150),
-        allowNull: false
+        allowNull: true
       },
       salt: {
         type: DataTypes.STRING(150),
-        allowNull: false
+        allowNull: true
       },
       first_name: {
         type: DataTypes.STRING(150),
-        allowNull: false
+        allowNull: true
       },
       last_name: {
         type: DataTypes.STRING(150),
-        allowNull: false
+        allowNull: true
       },
       profile_image: {
         type: DataTypes.STRING(255),

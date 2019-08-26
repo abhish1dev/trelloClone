@@ -3,6 +3,7 @@ import env from '../env';
 
 import User from '../server/Models/users';
 import Board from '../server/Models/boards';
+import UserBoard from '../server/Models/user_board_association';
 
 const Op = Sequelize.Op;
 const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DATABASE_PASSWORD, {
@@ -28,7 +29,8 @@ const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DA
 
 const models = {
   Users: User.schema(sequelize, Sequelize),
-  Boards: Board.schema(sequelize, Sequelize)
+  Boards: Board.schema(sequelize, Sequelize),
+  UserBoards: UserBoard.schema(sequelize, Sequelize)
 };
 
 Object.values(models)

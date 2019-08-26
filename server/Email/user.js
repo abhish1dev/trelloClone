@@ -36,6 +36,32 @@ class UserEmail {
     });
   }
 
+  inviteUser(email, invitedBy, token) {
+    const content = `<p>Hello</p>
+  <br/>
+  <p>You are invited by ${invitedBy} to a board.</p>
+  <p>Please click on the below link for accepting the invitation</p>
+  <p><a href=${env.DOMAIN_IP}users/invite/${token}>Accepting Invitation</a></p>
+  <br/>
+  <p>
+  Best Regards,<br/>
+  Trello Clone
+  </p>`;
+    const mailDetail = {
+      name: email,
+      from: env.MAIL_ID,
+      to: email,
+      subject: 'Invitation to Trello',
+      text: 'Trello',
+      html: content
+    };
+    Mail(mailDetail, (response) => {
+      if (response.status === true) {
+        this.verificationToken(userDetail.user_id, token);
+      }
+    });
+  }
+
   async verificationToken(userId, token) {
     await db.Users.update({
       verification_token: token

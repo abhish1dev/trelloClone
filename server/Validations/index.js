@@ -9,15 +9,12 @@ export default {
       password: Joi.string().required(),
     }
   },
-  // Register User
-  registration: {
+  // Invite user
+  inviteUser: {
     body: {
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
       email: Joi.string().email({
         minDomainAtoms: 2
-      }).required(),
-      password: Joi.string().required()
+      }).required()
     }
   }
 };
