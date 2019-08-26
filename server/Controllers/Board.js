@@ -7,9 +7,9 @@ import Email from '../Email/user';
 import PasswordManager from '../Helpers/PasswordManager';
 
 const Op = db.Op;
-const debug = require('debug')('trelloClone: Controller/User');
+const debug = require('debug')('trelloClone: Controller/Board');
 
-class Users {
+class Board {
 
   /**
    * User create a board
@@ -241,4 +241,4 @@ async function associateUserBoard(uEmail, invitedBy, userId, boardId, invitation
   });
 }
 
-export default Users;
+export default Board;

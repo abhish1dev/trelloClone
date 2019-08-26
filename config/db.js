@@ -4,6 +4,8 @@ import env from '../env';
 import User from '../server/Models/users';
 import Board from '../server/Models/boards';
 import UserBoard from '../server/Models/user_board_association';
+import BoardList from '../server/Models/board_lists';
+import ListTicket from '../server/Models/list_ticket';
 
 const Op = Sequelize.Op;
 const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DATABASE_PASSWORD, {
@@ -28,9 +30,11 @@ const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DA
 // so everything is accessible via one object
 
 const models = {
-  Users: User.schema(sequelize, Sequelize),
-  Boards: Board.schema(sequelize, Sequelize),
-  UserBoards: UserBoard.schema(sequelize, Sequelize)
+  Users: User(sequelize, Sequelize),
+  Boards: Board(sequelize, Sequelize),
+  UserBoards: UserBoard(sequelize, Sequelize),
+  BoardList: BoardList(sequelize, Sequelize),
+  ListTickets: ListTicket(sequelize, Sequelize)
 };
 
 Object.values(models)

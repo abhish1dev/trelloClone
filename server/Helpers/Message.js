@@ -12,5 +12,7 @@ module.exports = {
   boardUpdated: 'Board updated successfully',
   userAlreadyInvited: 'User already invited for the board',
   userInvited: 'User invited successfully. Verification link send to user account',
-  invitedRegistration: 'You have registered successfully.'
+  invitedRegistration: 'You have registered successfully',
+  listCreated: 'List created successfully',
+  listUpdated: 'List updated successfully'
 };

@@ -16,5 +16,13 @@ export default {
         minDomainAtoms: 2
       }).required()
     }
+  },
+  /** BoardList Model */
+  createdBoardList: {
+    body: Joi.object().keys({
+      board_id: Joi.required(),
+      list_title: Joi.string().required(),
+      list_id: Joi.required()
+    }).min(2).max(2)
   }
 };
