@@ -6,7 +6,6 @@ import uploadFile from '../Helpers/uploadFile';
 import Email from '../Email/user';
 import PasswordManager from '../Helpers/PasswordManager';
 
-const Op = db.Op;
 const debug = require('debug')('trelloClone: Controller/Board');
 
 class Board {
@@ -169,7 +168,7 @@ class Board {
       raw: true,
       attributes: ['user_id', 'email']
     });
-    console.log(verifyToken);
+    debug(verifyToken);
     if (verifyToken !== null) {
       uploadFile.uploadFile(req, async (cb) => {
         if (cb.success != true) {

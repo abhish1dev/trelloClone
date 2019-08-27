@@ -3,7 +3,6 @@
 
 import Mail from './Mail';
 import env from '../../env';
-import db from '../../config/db';
 
 const debug = require('debug')('trelloClone:Email/User');
 
@@ -29,7 +28,7 @@ class UserEmail {
     };
     Mail(mailDetail, (response) => {
       if (response.status === true) {
-        debug('Mail')
+        debug('Mail');
       }
     });
   }

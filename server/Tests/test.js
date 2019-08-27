@@ -1,12 +1,11 @@
 import request from 'supertest';
-import dummyData from './dummyData';
 
 const server = request.agent('http://localhost:8089/v1.0');
 const uniqEmail = Math.floor(100000 + Math.random() * 900000);
 let authToken = '';
 let token = '';
 let boardId = '';
-let userEmail = `abhishek${uniqEmail}@mailinator.com`;
+const userEmail = `abhishek${uniqEmail}@mailinator.com`;
 
 describe('Create User', () => {
   it('respond with json', (done) => {
@@ -33,7 +32,7 @@ describe('Verify User', () => {
       .get(`/users/verify/${authToken}`)
       .set('Content-Type', 'application/json')
       .expect(200)
-      .end((err, data) => {
+      .end((err) => {
         if (err) return done(err);
         done();
       });
@@ -45,7 +44,7 @@ describe('Login User', () => {
     server
       .post('/users/login')
       .set('Content-Type', 'application/json')
-      .send({email: userEmail, password: '123456789'})
+      .send({ email: userEmail, password: '123456789' })
       .expect(200)
       .end((err, data) => {
         if (err) return done(err);
@@ -82,7 +81,7 @@ describe('Update Board', () => {
       .field('board_id', boardId)
       .set({ Authorization: token })
       .expect(201)
-      .end((err, data) => {
+      .end((err) => {
         if (err) return done(err);
         done();
       });
@@ -94,10 +93,10 @@ describe('Invite', () => {
     server
       .post('/boards/inviteUser')
       .set('Content-Type', 'application/json')
-      .send({email: `abhishekInvited${uniqEmail}@mailinator.com`, board_id: boardId})
+      .send({ email: `abhishekInvited${uniqEmail}@mailinator.com`, board_id: boardId })
       .set({ Authorization: token })
       .expect(201)
-      .end((err, data) => {
+      .end((err) => {
         if (err) return done(err);
         done();
       });

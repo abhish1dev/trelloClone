@@ -32,11 +32,11 @@ gulp.task('babel', () =>
   .pipe(plugins.newer('dist'))
   .pipe(plugins.sourcemaps.init())
   .pipe(plugins.babel({
-    "presets": ["es2015","stage-2"],
-    "plugins": [
-      ["transform-runtime", {
-        "polyfill": false,
-        "regenerator": true
+    presets: ['es2015', 'stage-2'],
+    plugins: [
+      ['transform-runtime', {
+        polyfill: false,
+        regenerator: true
       }]
     ]
   }))

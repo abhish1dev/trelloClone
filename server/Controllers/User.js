@@ -140,8 +140,8 @@ class Users {
           verification_token: token
         }
       });
-      console.log(verifyToken);
-      console.log(userVerified);
+      debug(verifyToken);
+      debug(userVerified);
       const statusMessage = (userVerified[0] === 0) ? Message.linkExpired : Message.emailVerified;
       res.status(200).json(new ResponseObject(200, statusMessage));
     } catch (err) {

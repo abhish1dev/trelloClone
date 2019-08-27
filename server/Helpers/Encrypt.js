@@ -27,14 +27,12 @@ class Encrypt {
   }
 
   verifyPassword(savedSalt, savedPassword) {
-    
     const salt = savedSalt;
     const hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
     hash.update(this.password);
     const passwordHash = hash.digest('hex');
-    
+
     if (passwordHash === savedPassword) {
-      console.log('3333333333333333');
       return true;
     }
     return false;

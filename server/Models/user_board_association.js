@@ -1,6 +1,6 @@
 /* jshint indent: 2 */
 
-export default function(sequelize, DataTypes) {
+export default function (sequelize, DataTypes) {
   const UserBoard = sequelize.define('user_board_association', {
     user_board_id: {
       type: DataTypes.INTEGER(11),

@@ -86,7 +86,6 @@ export default function (sequelize, DataTypes) {
     ListTickets.hasMany(models.TicketComments, {
       as: 'ticketComments'
     });
-
   };
   return ListTickets;
 }

@@ -40,7 +40,7 @@ const models = {
 };
 
 Object.values(models)
-  .filter(model => typeof model.associate === "function")
+  .filter(model => typeof model.associate === 'function')
   .forEach(model => model.associate(models));
 
 const db = {
