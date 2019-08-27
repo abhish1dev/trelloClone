@@ -46,5 +46,15 @@ export default function(sequelize, DataTypes) {
   }, {
     tableName: 'user_board_association'
   });
+  UserBoard.associate = (models) => {
+    UserBoard.belongsTo(models.Users, {
+      foreignKey: 'invited_to',
+      as: 'invited'
+    });
+    UserBoard.belongsTo(models.Boards, {
+      foreignKey: 'board_id',
+      as: 'board'
+    });
+  };
   return UserBoard;
 }

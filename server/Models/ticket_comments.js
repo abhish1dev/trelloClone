@@ -38,7 +38,13 @@ export default function (sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'ticket_comments'
+    tableName: 'ticket_comments',
   });
+  TicketComment.associate = (models) => {
+    TicketComment.belongsTo(models.ListTickets, {
+      foreignKey: 'ticket_id',
+      as: 'listTickets'
+    });
+  };
   return TicketComment;
 }

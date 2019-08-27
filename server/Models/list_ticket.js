@@ -70,5 +70,23 @@ export default function (sequelize, DataTypes) {
   }, {
     tableName: 'list_ticket'
   });
+  ListTickets.associate = (models) => {
+    ListTickets.belongsTo(models.BoardList, {
+      foreignKey: 'list_id',
+      as: 'boardLists'
+    });
+    ListTickets.belongsTo(models.Users, {
+      foreignKey: 'ticket_assigned_to',
+      as: 'assignedTo'
+    });
+    ListTickets.belongsTo(models.Users, {
+      foreignKey: 'ticket_assigned_by',
+      as: 'assignedBy'
+    });
+    ListTickets.hasMany(models.TicketComments, {
+      as: 'ticketComments'
+    });
+
+  };
   return ListTickets;
 }

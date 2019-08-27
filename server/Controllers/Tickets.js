@@ -58,28 +58,50 @@ class Tickets {
   static async changeTicketOrder(req, res, next) {
     const post = req.body;
     try {
-      await db.ListTickets.update({
-        ticket_order: post.new_order
-      }, {
+      const oldOrder = await db.ListTickets.findOne({
         where: {
           ticket_id: post.ticket_id
-        }
+        },
+        raw: true,
+        attributes: ['ticket_order']
       });
-      await db.ListTickets.update({
-        ticket_order: db.Sequelize.literal('ticket_order + 1')
-      }, {
+      const maxOrder = await db.ListTickets.max('ticket_order', {
         where: {
-          list_id: post.list_id,
-          ticket_id: {
-            [Op.ne]: post.ticket_id
-          },
-          ticket_order: {
-            [Op.gte]: post.new_order,
-            [Op.lt]: post.old_order
-          }
-        }
+          list_id: post.list_id
+        },
+        raw: true
       });
-      res.status(201).json(new ResponseObject(201, Message.ticketUpdated));
+      if (post.new_order <= maxOrder) {
+        await db.ListTickets.update({
+          ticket_order: post.new_order
+        }, {
+          where: {
+            ticket_id: post.ticket_id
+          }
+        });
+        const orderChange = (post.new_order > oldOrder.ticket_order) ? 'ticket_order - 1' : 'ticket_order + 1';
+        const orderCondition = (post.new_order > oldOrder.ticket_order) ? {
+          [Op.gte]: oldOrder.ticket_order,
+          [Op.lte]: post.new_order
+        } : {
+          [Op.gte]: post.new_order,
+          [Op.lt]: oldOrder.ticket_order
+        };
+        await db.ListTickets.update({
+          ticket_order: db.Sequelize.literal(orderChange)
+        }, {
+          where: {
+            list_id: post.list_id,
+            ticket_id: {
+              [Op.ne]: post.ticket_id
+            },
+            ticket_order: orderCondition
+          }
+        });
+        res.status(201).json(new ResponseObject(201, Message.ticketUpdated));
+      } else {
+        res.status(200).json(new ResponseObject(400, Message.notInRange));
+      }
     } catch (err) {
       next(err);
     }

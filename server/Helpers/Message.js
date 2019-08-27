@@ -17,5 +17,6 @@ module.exports = {
   listUpdated: 'List updated successfully',
   ticketCreated: 'Ticket created successfully',
   ticketUpdated: 'Ticket updated successfully',
-  ticketComment: 'Comment added successfully'
+  ticketComment: 'Comment added successfully',
+  notInRange: 'New order is incorrect'
 };

@@ -1,6 +1,6 @@
 /* jshint indent: 2 */
 
-export default function(sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const Board = sequelize.define('boards', {
     board_id: {
       type: DataTypes.INTEGER(11),
@@ -54,12 +54,21 @@ export default function(sequelize, DataTypes) {
       defaultValue: '0'
     }
   }, {
-    tableName: 'boards',
-    classMethods: {
-      associate : function(models) {
-          Board.belongsTo(models.User);
-      },
-    },
+    tableName: 'boards'
   });
+  Board.associate = (models) => {
+    Board.belongsTo(models.Users, {
+      foreignKey: 'board_created_by',
+      as: 'boardAdmin'
+    });
+    Board.belongsToMany(models.Users, {
+      through: 'UserBoards',
+      foreignKey: 'invited_to',
+      as: 'invitedUsers'
+    });
+    Board.hasMany(models.BoardList, {
+      as: 'boardList'
+    });
+  };
   return Board;
-}
+};
