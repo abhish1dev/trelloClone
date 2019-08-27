@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint linebreak-style: ["error", "windows"] */
 
-import hat from 'hat';
 import Mail from './Mail';
 import env from '../../env';
 import db from '../../config/db';
@@ -9,8 +8,7 @@ import db from '../../config/db';
 const debug = require('debug')('trelloClone:Email/User');
 
 class UserEmail {
-  registration(userDetail) {
-    const token = hat() + Date.now();
+  registration(token, userDetail) {
     const content = `<p>Hello ${userDetail.first_name}</p>
   <br/>
   <p>Congratulations !! Your account has been created.</p>
@@ -31,7 +29,7 @@ class UserEmail {
     };
     Mail(mailDetail, (response) => {
       if (response.status === true) {
-        this.verificationToken(userDetail.user_id, token);
+        debug('Mail')
       }
     });
   }
@@ -58,16 +56,6 @@ class UserEmail {
     Mail(mailDetail, (response) => {
       if (response.status === true) {
         this.verificationToken(userDetail.user_id, token);
-      }
-    });
-  }
-
-  async verificationToken(userId, token) {
-    await db.Users.update({
-      verification_token: token
-    }, {
-      where: {
-        user_id: userId
       }
     });
   }

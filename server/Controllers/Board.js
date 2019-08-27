@@ -58,7 +58,7 @@ class Board {
             });
           });
         }
-        res.status(201).json(new ResponseObject(201, Message.boardCreated));
+        res.status(201).json(new ResponseObject(201, Message.boardCreated, boardId));
       } catch (err) {
         next(err);
       }

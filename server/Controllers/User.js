@@ -1,3 +1,4 @@
+import hat from 'hat';
 import db from '../../config/db';
 import ResponseObject from '../Helpers/ResponseObject';
 import Message from '../Helpers/Message';
@@ -40,18 +41,19 @@ class Users {
           if (isActive === 0 || emailVerified === 0) {
             const statusMessage = (isActive === 0) ? Message.accountDeactivated : Message.emailNotVerified;
             res.status(200).json(new ResponseObject(500, statusMessage));
+          } else {
+            const auth = new Jwt();
+            const payloadQuery = {
+              user_id: userDetail.user_id,
+              first_name: userDetail.first_name,
+              last_name: userDetail.last_name
+            };
+            auth.payload = {
+              query: payloadQuery
+            };
+            const tokenObj = auth.generateToken();
+            res.status(200).json(new ResponseObject(200, Message.loggedIn, tokenObj));
           }
-          const auth = new Jwt();
-          const payloadQuery = {
-            user_id: userDetail.user_id,
-            first_name: userDetail.first_name,
-            last_name: userDetail.last_name
-          };
-          auth.payload = {
-            query: payloadQuery
-          };
-          const tokenObj = auth.generateToken();
-          res.status(200).json(new ResponseObject(200, Message.loggedIn, tokenObj));
         } else {
           res.status(200).json(new ResponseObject(500, Message.wrongEmail));
         }
@@ -84,8 +86,17 @@ class Users {
       post.password = passwordObj.password;
       post.salt = passwordObj.salt;
       try {
+        const token = hat() + Date.now();
         const userCreated = await db.Users.create(post);
-        email.registration(userCreated);
+        const userId = userCreated.user_id;
+        await db.Users.update({
+          verification_token: token
+        }, {
+          where: {
+            user_id: userId
+          }
+        });
+        email.registration(token, userCreated);
         debug(cb.fileDetail);
         if (cb.fileDetail.length) {
           const userId = userCreated.user_id;
@@ -98,7 +109,7 @@ class Users {
             });
           });
         }
-        res.status(200).json(new ResponseObject(200, Message.registration));
+        res.status(200).json(new ResponseObject(200, Message.registration, token));
       } catch (err) {
         next(err);
       }
@@ -116,6 +127,11 @@ class Users {
   static async emailVerification(req, res, next) {
     try {
       const token = req.params.token;
+      const verifyToken = db.Users.findOne({
+        where: {
+          verification_token: token
+        }
+      });
       const userVerified = await db.Users.update({
         email_verified: 1,
         verification_token: null
@@ -124,6 +140,8 @@ class Users {
           verification_token: token
         }
       });
+      console.log(verifyToken);
+      console.log(userVerified);
       const statusMessage = (userVerified[0] === 0) ? Message.linkExpired : Message.emailVerified;
       res.status(200).json(new ResponseObject(200, statusMessage));
     } catch (err) {
