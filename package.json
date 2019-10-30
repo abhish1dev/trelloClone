@@ -71,7 +71,7 @@
     "coveralls": "^3.0.2",
     "cross-env": "^3.2.4",
     "del": "^2.2.2",
-    "eslint": "^3.19.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-fix": "^1.0.3",
     "eslint-plugin-import": "^2.14.0",
